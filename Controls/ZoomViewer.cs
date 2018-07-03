@@ -126,6 +126,10 @@ namespace EmergenceGuardian.WpfExtensions {
             ZoomViewer P = d as ZoomViewer;
             P.UpdateZoomWidth();
             P.UpdateZoomHeight();
+
+            // Adjust scrollbars to maintain position.
+            P.ScrollHorizontalOffset = P.ScrollHorizontalOffset / (double)e.OldValue * (double)e.NewValue;
+            P.ScrollVerticalOffset = P.ScrollVerticalOffset / (double)e.OldValue * (double)e.NewValue;
         }
         private static object CoerceZoom(DependencyObject d, object baseValue) {
             ZoomViewer P = d as ZoomViewer;
@@ -189,21 +193,9 @@ namespace EmergenceGuardian.WpfExtensions {
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e) {
             base.OnPreviewMouseWheel(e);
             if (AllowZoom) {
-                // Could improve by keeping mouse position centered on zoom, but haven't found the right formula yet.
-                //var position = e.GetPosition(this);
-                double OffsetX = ScrollHorizontalOffset / Zoom;
-                double OffsetY = ScrollVerticalOffset / Zoom;
-
                 // Set new zoom, enforcing MinZoom/MaxZoom.
-                double NewZoom = Zoom;
-                if (e.Delta > 0)
-                    NewZoom *= ZoomIncrement;
-                else
-                    NewZoom /= ZoomIncrement;
+                double NewZoom = e.Delta > 0 ? Zoom * ZoomIncrement : Zoom / ZoomIncrement;
                 Zoom = (double)CoerceZoom(this, NewZoom);
-
-                ScrollHorizontalOffset = OffsetX * Zoom;
-                ScrollVerticalOffset = OffsetY * Zoom;
 
                 e.Handled = true;
             }
