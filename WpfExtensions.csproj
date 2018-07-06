@@ -55,16 +55,17 @@
   <ItemGroup>
     <Compile Include="Controls\ZoomViewer.cs" />
     <Compile Include="Converters\BooleanConverter.cs" />
+    <Compile Include="Binding\Int32Extension.cs" />
     <Compile Include="Extensions\MouseCaptureExtension.cs" />
     <Compile Include="Extensions\FocusExtension.cs" />
-    <Compile Include="Extensions\MethodBindingExtension.cs" />
-    <Compile Include="Extensions\PushBinding.cs" />
+    <Compile Include="Binding\MethodBindingExtension.cs" />
+    <Compile Include="Binding\PushBinding.cs" />
     <Compile Include="Extensions\ScrollViewerBinding.cs" />
     <Compile Include="Extensions\SelectTextOnFocus.cs" />
     <Compile Include="Extensions\TabControlBehavior.cs" />
     <Compile Include="Extensions\ViewBoxExtension.cs" />
     <Compile Include="Helpers\LinqToVisualTree.cs" />
-    <Compile Include="Helpers\MessageBoxManager.cs" />
+    <Compile Include="Services\EnvironmentService.cs" />
     <Compile Include="Helpers\PropertyChangeNotifier.cs" />
     <Compile Include="Helpers\PropertyObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

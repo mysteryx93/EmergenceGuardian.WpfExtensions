@@ -6,44 +6,29 @@ using System.Windows.Controls;
 
 namespace EmergenceGuardian.WpfExtensions {
     /// <summary>
-    /// Allows setting and releasing mouse capture.
+    /// Captures the mouse causing it to lose focus when clicking anywhere outside the control.
     /// </summary>
     public static class MouseCaptureExtension {
         // HasCapture
-        public static readonly DependencyProperty CaptureProperty = DependencyProperty.RegisterAttached("Capture", typeof(MouseCaptureState), 
-            typeof(MouseCaptureExtension),  new UIPropertyMetadata(MouseCaptureState.None, OnCaptureChanged));
-        public static MouseCaptureState GetCapture(DependencyObject obj) => (MouseCaptureState)obj.GetValue(CaptureProperty);
-        public static void SetCapture(DependencyObject obj, MouseCaptureState value) => obj.SetValue(CaptureProperty, value);
-        private static void OnCaptureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if (d is Control P) {
-                switch ((MouseCaptureState)e.NewValue) {
-                    case MouseCaptureState.Mouse:
-                        P.CaptureMouse();
-                        P.LostFocus += Control_LostFocus;
-                        break;
-                    case MouseCaptureState.Stylus:
-                        P.CaptureStylus();
-                        P.LostFocus += Control_LostFocus;
-                        break;
-                    case MouseCaptureState.None:
-                        if ((MouseCaptureState)e.OldValue == MouseCaptureState.Mouse)
-                            P.ReleaseMouseCapture();
-                        else 
-                            P.ReleaseStylusCapture();
-                        P.LostFocus -= Control_LostFocus;
-                        break;
-                }
+        public static readonly DependencyProperty HasCaptureProperty = DependencyProperty.RegisterAttached("HasCapture", typeof(bool), 
+            typeof(MouseCaptureExtension),  new UIPropertyMetadata(false, OnHasCaptureChanged));
+        public static bool GetHasCapture(DependencyObject obj) => (bool)obj.GetValue(HasCaptureProperty);
+        public static void SetHasCapture(DependencyObject obj, bool value) => obj.SetValue(HasCaptureProperty, value);
+        private static void OnHasCaptureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            if (!(d is Control P))
+                return;
+
+            if ((bool)e.NewValue == true) {
+                P.CaptureMouse();
+                P.LostFocus += Control_LostFocus;
+            } else {
+                P.ReleaseMouseCapture();
+                P.LostFocus -= Control_LostFocus;
             }
         }
 
         private static void Control_LostFocus(object sender, RoutedEventArgs e) {
-            SetCapture(sender as Control, MouseCaptureState.None);
+            SetHasCapture(sender as Control, false);
         }
-    }
-
-    public enum MouseCaptureState {
-        None,
-        Mouse,
-        Stylus
     }
 }
