@@ -37,7 +37,6 @@ namespace EmergenceGuardian.WpfExtensions {
 
         public override object ProvideValue(IServiceProvider serviceProvider) {
             var provideValueTarget = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
-            var target = provideValueTarget.TargetObject as FrameworkElement;
             Type eventHandlerType = null;
 
             if (provideValueTarget.TargetProperty is EventInfo eventInfo) {
@@ -49,7 +48,7 @@ namespace EmergenceGuardian.WpfExtensions {
                     eventHandlerType = parameters[1].ParameterType;
             }
 
-            if (target == null || eventHandlerType == null)
+            if (!(provideValueTarget.TargetObject is FrameworkElement target) || eventHandlerType == null)
                 return this;
 
             foreach (object argument in _arguments) {
@@ -163,9 +162,7 @@ namespace EmergenceGuardian.WpfExtensions {
                 StorageProperties.Add(property);
             }
 
-            var markupExtension = value as MarkupExtension;
-
-            if (markupExtension != null) {
+            if (value is MarkupExtension markupExtension) {
                 var resolvedValue = markupExtension.ProvideValue(new ServiceProvider(obj, property));
                 obj.SetValue(property, resolvedValue);
             } else {

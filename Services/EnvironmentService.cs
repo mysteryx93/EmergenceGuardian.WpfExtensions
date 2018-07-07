@@ -10,6 +10,6 @@ namespace EmergenceGuardian.WpfExtensions {
 
     public class EnvironmentService : IEnvironmentService {
         public IEnumerable<string> CommandLineArguments => Environment.GetCommandLineArgs();
-        public Version AppVersion => Assembly.GetExecutingAssembly().GetName().Version;
+        public Version AppVersion => Assembly.GetEntryAssembly().GetName().Version;
     }
 }
