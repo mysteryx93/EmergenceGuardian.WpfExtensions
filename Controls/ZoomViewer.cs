@@ -127,6 +127,17 @@ namespace EmergenceGuardian.WpfExtensions {
             P.UpdateZoomWidth();
             P.UpdateZoomHeight();
 
+            // Trying to find right equation to zoom from center, or zoom from mouse position. Haven't found the formula yet.
+            //double Width = P.PartContent.ActualWidth;
+            //double Height = P.PartContent.ActualHeight;
+            //double ZoomDiff = (double)e.NewValue / (double)e.OldValue;
+            //double DiffX = Width * (double)e.NewValue - Width * (double)e.OldValue;
+            //double DiffY = Height * (double)e.NewValue - Height * (double)e.OldValue;
+            //double RatioX = P.PartScroll.ViewportWidth / P.ZoomWidth * P.PartScroll.ViewportWidth;
+            //double RatioY = P.PartScroll.ViewportHeight / P.ZoomHeight * P.PartScroll.ViewportHeight;
+            //P.ScrollHorizontalOffset = P.ScrollHorizontalOffset * ZoomDiff + RatioX;
+            //P.ScrollVerticalOffset = P.ScrollVerticalOffset * ZoomDiff + RatioY;
+
             // Adjust scrollbars to maintain position.
             P.ScrollHorizontalOffset = P.ScrollHorizontalOffset / (double)e.OldValue * (double)e.NewValue;
             P.ScrollVerticalOffset = P.ScrollVerticalOffset / (double)e.OldValue * (double)e.NewValue;
