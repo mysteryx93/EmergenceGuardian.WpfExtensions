@@ -61,7 +61,7 @@
     <Compile Include="Binding\MethodBindingExtension.cs" />
     <Compile Include="Binding\PushBinding.cs" />
     <Compile Include="Extensions\ScrollViewerBinding.cs" />
-    <Compile Include="Extensions\SelectTextOnFocus.cs" />
+    <None Include="Extensions\_SelectTextOnFocus.cs" />
     <Compile Include="Extensions\TabControlBehavior.cs" />
     <Compile Include="Extensions\ViewBoxExtension.cs" />
     <Compile Include="Helpers\LinqToVisualTree.cs" />
